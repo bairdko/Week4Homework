@@ -2,6 +2,7 @@
 //generate the target number for the game
 
 var targetLoc = $("#targetNum");
+var scoreBox = $('#scoreBox')
 var targetNum = 0;
 var crystalsArr = ["#sapphire","#ruby","#emerald","#amethyst"];
 
@@ -45,12 +46,12 @@ var losses = 0;
 function restartGame(){
   setTarget();
 
-  assignVal("#sapphire");
-  assignVal("#ruby");
-  assignVal("#emerald");
-  assignVal("#amethyst");
+  for(var i = 0; i < crystalsArr.length; i++){
+    assignVal(crystalsArr[i]);
+  }
 
   playerScore = 0;
+  scoreBox.text(playerScore);
 }
 
 var addCrystals = $('.crystals').on('click',function(){
@@ -64,19 +65,19 @@ var addCrystals = $('.crystals').on('click',function(){
 
  playerScore += parseInt(crystalVal);
 
- $('#scoreBox').text(playerScore);
+ scoreBox.text(playerScore);
 
   if (playerScore > targetNum){
-    alert("You lose!");
+    setTimeout(function(){alert("You lose!")},350);
     losses++;
     $('#losses').text(losses);
-    setTimeout(restartGame,500);
+    setTimeout(restartGame,700);
   }
   else if (playerScore === targetNum){
-    alert("You win!");
+    setTimeout(function(){alert("You win!")},350);
     wins++;
     $('#wins').text(wins);
-    setTimeout(restartGame,500);
+    setTimeout(restartGame,700);
   }
 
 });
