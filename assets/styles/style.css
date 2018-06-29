@@ -26,3 +26,7 @@ h1{
 #instructions{
     padding-top:1.5rem;
 }
+
+#winnerBar{
+	display:none;
+}

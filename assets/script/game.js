@@ -1,86 +1,120 @@
 
-//generate the target number for the game
+//game object
+var collectorGame = {
+	
+	//variables
+	targetNum: 0,
+	playerScore: 0, 
+    wins: 0,
+    losses: 0,
+	crystalsArr: ["#sapphire","#ruby","#emerald","#amethyst"],
+	possibleVals: [1,2,3,4,5,6,7,8,9,10,11,12],
+	
+	//location variables
+	targetLoc: $("#targetNum"),
+	scoreBox: $('#scoreBox'),
+	winStatus: $('#winnerBar'),
+	
+	//generate the target number for the game	
+	setTarget: function(){
 
-var targetLoc = $("#targetNum");
-var scoreBox = $('#scoreBox')
-var targetNum = 0;
-var crystalsArr = ["#sapphire","#ruby","#emerald","#amethyst"];
+	  //make sure target is at least generate number between 19 & 120
+	  collectorGame.targetNum = Math.floor(Math.random() * 101) + 19;
+	  collectorGame.targetLoc.text(collectorGame.targetNum);
+	},
+	
+	//generate crystal numbers
+	assignVal: function(){
+		
+	  //went down a rabbit hole, and ended up finding the Fisher-Yates method of shuffling
+	  //using that method here
+	  var m = collectorGame.possibleVals.length;
+	  var temp;
+	  var i;
 
-function setTarget(){
+	  //while elements remain to shuffle
+	  while(m){
+		  
+		 //pick remaining element
+		 i = Math.floor(Math.random() * m--);
+		 
+		 //swap with remaining elements
+		 temp = collectorGame.possibleVals[m];
+		 collectorGame.possibleVals[m] = collectorGame.possibleVals[i];
+		 collectorGame.possibleVals[i] = temp;
+	  }
+	  
+	  console.log(collectorGame.possibleVals);
+	  //assign value to each crystal
 
-  //make sure target is at least generate number between 19 & 120
-  targetNum = Math.floor(Math.random() * 101) + 19;
-  targetLoc.text(targetNum);
+		for(var i = 0; i < collectorGame.crystalsArr.length; i++){
+		  $(collectorGame.crystalsArr[i]).attr("val",collectorGame.possibleVals[i]);
+		}
+
+	},
+	
+	
+	//restart game 
+
+	restartGame: function(){
+	  collectorGame.setTarget();
+	  collectorGame.assignVal();
+
+	  collectorGame.playerScore = 0;
+	  collectorGame.scoreBox.text(collectorGame.playerScore);
+	  collectorGame.winStatus.css("display","none");
+	},
+	
+
+	//play game
+	addCrystals: function(val){
+	 this.playerScore += parseInt(val);
+
+	 this.scoreBox.text(this.playerScore);
+	 
+	 var that = this;
+
+	 
+	  // if your score is over target you lose 
+	  // if your score is equal to target you win
+	  // else you can keep playing
+
+
+	  if (this.playerScore > this.targetNum){
+		that.losses++;
+		$('#losses').text(that.losses);
+		
+		this.winStatus.html("<h1>You lose!</html>");
+		this.winStatus.css("display","flex");
+		setTimeout(collectorGame.restartGame,1000);
+		
+		
+	  }
+	  else if (this.playerScore === this.targetNum){
+		that.wins++;
+		$('#wins').text(that.wins);
+		
+		this.winStatus.html("<h1>You win!</h1>");
+		this.winStatus.css("display","flex");
+		setTimeout(collectorGame.restartGame,1000);
+	  }
+	},
 }
 
-setTarget();
+collectorGame.restartGame();
 
-//generate crystal numbers
+//play game
 
-//var crystalsVal = $(".crystals");
-
-function assignVal(cryID){
-
-  var crystalsVal = $(cryID);
-  var num = Math.floor(Math.random() * 11) + 1;
-  crystalsVal.attr("val",num);
-
-}
-
-//assign value to each crystal
-//maybe throw numbers into an array to condense this
-
-for(var i = 0; i < crystalsArr.length; i++){
-  assignVal(crystalsArr[i]);
-}
-
-var playerScore = 0; 
-var wins = 0;
-var losses = 0;
-
-//restart game 
-// call settarget again
-// also call assignVal again
-// add win or loss score 
-
-function restartGame(){
-  setTarget();
-
-  for(var i = 0; i < crystalsArr.length; i++){
-    assignVal(crystalsArr[i]);
-  }
-
-  playerScore = 0;
-  scoreBox.text(playerScore);
-}
-
-var addCrystals = $('.crystals').on('click',function(){
-
-  // if statement 
-  // if your added crystal values goes over the targetvalue then you lose
-  // else you can keep playing
-
+$('.crystals').on('click',function(){
+	
  // add player scores
  var crystalVal = this.getAttribute('val');
-
- playerScore += parseInt(crystalVal);
-
- scoreBox.text(playerScore);
-
-  if (playerScore > targetNum){
-    setTimeout(function(){alert("You lose!")},350);
-    losses++;
-    $('#losses').text(losses);
-    setTimeout(restartGame,700);
-  }
-  else if (playerScore === targetNum){
-    setTimeout(function(){alert("You win!")},350);
-    wins++;
-    $('#wins').text(wins);
-    setTimeout(restartGame,700);
-  }
+ collectorGame.addCrystals(crystalVal);
 
 });
+
+
+
 
 
 
