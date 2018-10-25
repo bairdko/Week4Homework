@@ -1,13 +1,16 @@
-#  READ ME
-### testing
-Sorry I forgot to add this before. I didn't read this part of the instructions
+#  Crystal Collector
+###### Assigned: 6/30/18
+This homework was the fourth homework, and our first introduction to jQuery to handle events and DOM interactions. Previously, we had just been using plain Javascript.
 
-### this is a new section I guess
+#### Game Mechanics
+- **Add the crystals together to hit the target number.**
+- Upon load, each crystal is assigned a random number value.
+- When the player clicks a crystal, it adds its value to the total score, but the value is hidden from the player initially.
+- Realistically, the player can very easily figure out the number assigned to each crystal, as long as they know basic math.
+- Add the crystals' hidden values together to reach the exact target. 
+- If you go over the target, you lose.
 
-### this is the explanation of the game
-- This homework is adding crystals together to try to hit the target number.
-- When the page opens, each assign a value to each image of a crystal.
-- When play clicks crystals it adds together, but they don't know what the value is.
-- I guess that makes it a game, but realistically it's very easy to figure out what each value is.
-- Add it together to the exact target. If you go over the target, you lose.
+**Known issues:** There are no known issues
+
+**Potential Improvements:** This game could be made a lot more of an actual game if the crystals' values were regenerated each time a player clicked on one. It would make it more of a game of luck instead of simple arithmetic.
 
