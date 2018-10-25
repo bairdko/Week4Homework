@@ -10,7 +10,7 @@ This homework was the fourth homework, and our first introduction to jQuery to h
 - Add the crystals' hidden values together to reach the exact target. 
 - If you go over the target, you lose.
 
-**Known issues:** There are no known issues
+**Known issues:** You can continue clicking crystals when the game ends, and your winning/losing message pops up. Need to disable crystals while that occurs
 
 **Potential Improvements:** This game could be made a lot more of an actual game if the crystals' values were regenerated each time a player clicked on one. It would make it more of a game of luck instead of simple arithmetic.
 
